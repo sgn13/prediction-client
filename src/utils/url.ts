@@ -12,4 +12,7 @@ export const url = {
   nurseProfile: "/nurse_profile",
   league: "/league",
   leagueUser: "/league",
+  fixture: "/fixture",
+  gameweek: "/gameweek",
+  leagueFixture:'/leaguematches'
 };

@@ -109,7 +109,7 @@ export function LeagueDetails() {
             <CardDescription>Your league positions</CardDescription>
           </CardHeader>
           <CardContent>
-            <RecentSales />
+            <RecentSales leagueId={leagueId} />
 
             {/* {user ? (
                   <RecentSales />

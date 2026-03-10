@@ -192,6 +192,13 @@ export const usersColumns: ColumnDef<User>[] = [
 export const leagueUsersColumns: ColumnDef<User>[] = [
   {
     id: 'fullName',
+    header: ({ column }) => <DataTableColumnHeader column={column} title='R' />,
+    cell: ({ row }) => {
+      return <LongText className='max-w-100'>1</LongText>
+    },
+  },
+  {
+    id: 'fullName',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Name' />
     ),
@@ -201,5 +208,29 @@ export const leagueUsersColumns: ColumnDef<User>[] = [
       )
     },
     meta: { className: 'w-100' },
+  },
+  {
+    id: 'silver',
+    header: ({ column }) => <DataTableColumnHeader column={column} title='S' />,
+    cell: ({ row }) => {
+      return <LongText className='max-w-100'>0</LongText>
+    },
+    meta: { className: 'w-20' },
+  },
+  {
+    id: 'gold',
+    header: ({ column }) => <DataTableColumnHeader column={column} title='G' />,
+    cell: ({ row }) => {
+      return <LongText className='max-w-100'>0</LongText>
+    },
+    meta: { className: 'w-20' },
+  },
+  {
+    id: 'premium',
+    header: ({ column }) => <DataTableColumnHeader column={column} title='P' />,
+    cell: ({ row }) => {
+      return <LongText className='max-w-100'>0</LongText>
+    },
+    meta: { className: 'w-20' },
   },
 ]
