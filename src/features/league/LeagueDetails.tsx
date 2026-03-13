@@ -59,7 +59,12 @@ export function LeagueDetails() {
 
   useEffect(() => {
     if (leagueId) {
-      fetchLeagueUsers({ id: leagueId || '698ae219082176b99bd9e7ee' })
+      fetchLeagueUsers({
+        id: leagueId || '698ae219082176b99bd9e7ee',
+        query: {
+          gameweek_id: '69ad30937e9ad400f018830e',
+        },
+      })
     }
   }, [leagueId])
 

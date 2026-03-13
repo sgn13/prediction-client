@@ -63,7 +63,6 @@ export function UserAuthForm({
           loading: 'Signing in...',
           success: (res) => {
             navigate({ to: redirectTo || '/', replace: true })
-            console.log({ res })
             return `Welcome back!`
           },
           error: (err) => ({
@@ -73,7 +72,6 @@ export function UserAuthForm({
           }),
         }
       )
-      console.log({ response })
 
       // navigate({ to: redirectTo || '/', replace: true })
     } finally {
@@ -87,8 +85,6 @@ export function UserAuthForm({
   //   const response = await login({
   //     values: data,
   //   })
-
-  //   console.log({ response }, 'skksks')
 
   //   toast.promise(sleep(2000), {
   //     loading: 'Signing in...',

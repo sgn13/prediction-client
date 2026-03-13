@@ -14,67 +14,66 @@ interface AuthParams {
 
 interface SidebarStore {
   isLoading: boolean;
-  leagueFixtures?: any;
-  leagueFixture?: any;
+  predictions?: any;
+  prediction?: any;
   jobsInfo?: any;
   statistics?: any;
-  fetchLeagueFixtures?: any;
-  fetchLeagueFixture?: any;
-  updateLeagueFixture?: any;
-  postLeagueFixture?: any;
-  joinLeagueFixture?: any;
-  removeLeagueFixture?: any;
-  resetLeagueFixture?: any;
-  applyToLeagueFixture?: any;
+  fetchPredictions?: any;
+  fetchPrediction?: any;
+  updatePrediction?: any;
+  postPrediction?: any;
+  joinPrediction?: any;
+  removePrediction?: any;
+  resetPrediction?: any;
+  applyToPrediction?: any;
 }
 
-const useLeagueFixtureStore = create<SidebarStore>((set) => {
+const usePredictionStore = create<SidebarStore>((set) => {
   return {
-    leagueFixtures: [],
-    leagueFixture: undefined,
+    predictions: [],
+    prediction: undefined,
     isLoading: false,
-    jobsInfo: undefined,
     statistics: undefined,
 
-    fetchLeagueFixtures: async ({ query }: AuthParams) => {
+    fetchPredictions: async ({ query }: AuthParams) => {
       set({ isLoading: true });
       const response: any = await GET({
-        url: url?.leagueFixture,
+        url: url?.prediction,
         query,
       });
       if (response) {
-        set({ leagueFixtures: response?.data || [], jobsInfo: response, isLoading: false });
+        set({ predictions: response?.data || [], jobsInfo: response, isLoading: false });
       }
       !response && set({ isLoading: false });
       return response;
     },
 
-    fetchLeagueFixture: async ({ id, query }: AuthParams) => {
+    fetchPrediction: async ({ id, query }: AuthParams) => {
       set({ isLoading: true });
       const response: any = await GET({
-        url: `${url?.leagueFixture}/${id}/`,
+        url: `${url?.prediction}/${id}/`,
         query,
       });
       if (response) {
-        set({ leagueFixture: response?.data, isLoading: false });
+        set({ prediction: response?.data, isLoading: false });
       }
       !response && set({ isLoading: false });
       return response;
     },
 
-    updateLeagueFixture: async ({ values, id }: AuthParams) => {
+    updatePrediction: async ({ values, id }: AuthParams) => {
       set({ isLoading: true });
       const response: any = await PATCH({
-        url: url?.leagueFixture + `/${id}`,
+        url: url?.prediction + `/${id}`,
         values: values,
       });
       if (response) {
         set((state) => {
-          const filteredData = state?.leagueFixtures?.filter((data: any) => data?.id !== id);
+          const filteredData = state?.predictions?.filter((data: any) => data?.id !== id);
 
           return {
-            leagueFixtures: [{ ...response?.data, name: values?.name }, ...filteredData],
-            individualLeagueFixture: response?.data,
+            predictions: [{ ...response?.data, name: values?.name }, ...filteredData],
+            individualPrediction: response?.data,
             isLoading: false,
           };
         });
@@ -83,19 +82,19 @@ const useLeagueFixtureStore = create<SidebarStore>((set) => {
       return response;
     },
 
-    postLeagueFixture: async ({ values }: AuthParams) => {
+    postPrediction: async ({ values }: AuthParams) => {
       set({ isLoading: true });
 
       const response: any = await POST({
         values: values,
-        url: url?.leagueFixture,
+        url: url?.prediction,
       });
       if (response) {
         set((state) => {
           // let datass = (data?.data || [])?.map((it) => ({ ...it, name: values?.[0]?.name }));
           return {
-            individualLeagueFixture: {},
-            leagueFixtures: [response?.data, ...state.leagueFixtures],
+            individualPrediction: {},
+            predictions: [response?.data, ...state.predictions],
             isLoading: false,
           };
         });
@@ -106,21 +105,21 @@ const useLeagueFixtureStore = create<SidebarStore>((set) => {
       return response;
     },
 
-    joinLeagueFixture: async ({ values }: AuthParams) => {
+    joinPrediction: async ({ values }: AuthParams) => {
 
        try {
    set({ isLoading: true });
 
       const response: any = await POST({
         values: values,
-        url: url?.leagueFixture+'/join',
+        url: url?.prediction+'/join',
       });
       if (response) {
         set((state) => {
           // let datass = (data?.data || [])?.map((it) => ({ ...it, name: values?.[0]?.name }));
           return {
-            individualLeagueFixture: {},
-            leagueFixtures: [response?.data, ...state.leagueFixtures],
+            individualPrediction: {},
+            predictions: [response?.data, ...state.predictions],
             isLoading: false,
           };
         });
@@ -135,21 +134,21 @@ const useLeagueFixtureStore = create<SidebarStore>((set) => {
      
     },
 
-    removeLeagueFixture: async ({ values, query }: AuthParams) => {
+    removePrediction: async ({ values, query }: AuthParams) => {
       set({ isLoading: true });
 
       const response: any = await DELETE({
         // values: values,
-        url: url?.leagueFixture + "/",
+        url: url?.prediction + "/",
         query,
       });
       if (response) {
         set((state) => {
-          const filteredData = state?.leagueFixtures?.filter((data: any) => !values?.includes(data?.id));
+          const filteredData = state?.predictions?.filter((data: any) => !values?.includes(data?.id));
 
           return {
             ...state,
-            leagueFixtures: filteredData,
+            predictions: filteredData,
             isLoading: false,
           };
         });
@@ -158,35 +157,16 @@ const useLeagueFixtureStore = create<SidebarStore>((set) => {
       return response;
     },
 
-    applyToLeagueFixture: async ({ values, id }: AuthParams) => {
-      set({ isLoading: true });
-      const response: any = await POST({
-        url: url?.leagueFixture + `${id}/apply`,
-        values: values,
-      });
-      if (response) {
-        set(() => {
-          // const filteredData = state?.leagueFixtures?.filter((data: any) => data?.id !== id);
+   
 
-          return {
-            // leagueFixtures: [{ ...response?.data, name: values?.name }, ...filteredData],
-            // individualLeagueFixture: response?.data,
-            isLoading: false,
-          };
-        });
-      }
-      !response && set({ isLoading: false });
-      return response;
-    },
-
-    resetLeagueFixture: () => {
+    resetPrediction: () => {
       set({
-        leagueFixtures: [],
-        leagueFixture: undefined,
+        predictions: [],
+        prediction: undefined,
         isLoading: false,
       });
     },
   };
 });
 
-export default useLeagueFixtureStore;
+export default usePredictionStore;

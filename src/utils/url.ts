@@ -14,5 +14,6 @@ export const url = {
   leagueUser: "/league",
   fixture: "/fixture",
   gameweek: "/gameweek",
-  leagueFixture:'/leaguematches'
+  leagueFixture:'/leaguematches',
+  prediction:'/prediction'
 };

@@ -37,7 +37,7 @@ const useLeagueUserStore = create<SidebarStore>((set) => {
     fetchLeagueUsers: async ({  id,query }: AuthParams) => {
       set({ isLoading: true });
       const response: any = await GET({
-        url: `${url?.leagueUser}/${id}/members`,
+        url: `${url?.leagueUser}/${id}/leaderboard`,
         query,
       });
       if (response) {

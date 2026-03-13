@@ -3,7 +3,7 @@ import { useNavigate } from '@tanstack/react-router'
 import useLeagueStore from '@/stores/league'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
-export function RecentSales({ leagueId }) {
+export function RecentSales({ leagueId = '69982ff79975d1cc64e07e6e' }) {
   const navigate = useNavigate()
 
   const { fetchLeagues, leagues } = useLeagueStore()

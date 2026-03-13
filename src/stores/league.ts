@@ -43,7 +43,6 @@ const useLeagueStore = create<SidebarStore>((set) => {
         query,
       });
       if (response) {
-        console.log({response})
         set({ leagues: response?.data || [], jobsInfo: response, isLoading: false });
       }
       !response && set({ isLoading: false });

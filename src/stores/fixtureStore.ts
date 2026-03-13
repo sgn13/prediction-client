@@ -43,7 +43,6 @@ const useFixtureStore = create<SidebarStore>((set) => {
         query,
       });
       if (response) {
-        console.log({response})
         set({ fixtures: response?.data || [], jobsInfo: response, isLoading: false });
       }
       !response && set({ isLoading: false });

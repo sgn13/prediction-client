@@ -43,7 +43,6 @@ const useGameweekStore = create<SidebarStore>((set) => {
         query,
       });
       if (response) {
-        console.log({response})
         set({ gameweeks: response?.data || [], jobsInfo: response, isLoading: false });
       }
       !response && set({ isLoading: false });

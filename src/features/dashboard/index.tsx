@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react'
 import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { getRouteApi } from '@tanstack/react-router'
 import useAppStore from '@/stores/app'
-import useFixtureStore from '@/stores/fixtureStore'
 import useGameweekStore from '@/stores/gameweekStore'
 import useLeagueStore from '@/stores/league'
 import useLeagueFixtureStore from '@/stores/leagueFixtureStore'
-import EPLJson from '@/constants/epl.json'
-import { Epl_Team_Flag } from '@/constants/epl_logos'
+import usePredictionStore from '@/stores/predictionStore'
 import {
   Card,
   CardContent,
@@ -17,34 +13,23 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { TopNav } from '@/components/layout/top-nav'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
-import { SelectDropdown } from '@/components/select-dropdown'
+import { FixturePrediction } from './FixturePrediction'
 import { LeagueDashboard } from './components/leagueDashboard'
-import { RecentSales } from './components/leagueHome'
 import { UsersProvider } from './components/users-provider'
 
 const route = getRouteApi('/_authenticated/')
 
 const formSchema = z.object({
-  title: z.string().min(1, 'Title is required.'),
-  status: z.string().min(1, 'Please select a status.'),
-  label: z.string().min(1, 'Please select a label.'),
-  priority: z.string().min(1, 'Please choose a priority.'),
+  // fixture_id: z.string().min(1, 'Title is required.'),
+  // fantasy_league_id: z.string().min(1, 'Please select a status.'),
+  predicted_home_score: z.string().min(2, 'Please select a label.'),
+  predicted_away_score: z.string().min(2, 'Please choose a priority.'),
 })
 type TaskForm = z.infer<typeof formSchema>
 
@@ -54,35 +39,40 @@ export function Dashboard() {
 
   const { user } = useAppStore()
   const { fetchLeagues, leagues } = useLeagueStore()
-  const { fetchFixtures, fixtures } = useFixtureStore()
   const { fetchGameweeks, gameweeks } = useGameweekStore()
   const { fetchLeagueFixtures, leagueFixtures } = useLeagueFixtureStore()
+  const { postPrediction, fetchPredictions, predictions } = usePredictionStore()
 
   const [gameweekId, setGameweekId] = useState('69a2fdac4325f3340bf36c19')
   const [selectedLeague, setSelectedLeague] = useState(null)
+  const [selectedFixture, setSelectedFixture] = useState(null)
 
-  const form = useForm<TaskForm>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: '',
-      status: '',
-      label: '',
-      priority: '',
-    },
-  })
+  const [predictionInputs, setPredictionInputs] = useState({})
+  console.log({ predictions })
 
   useEffect(() => {
     fetchLeagues({})
     fetchGameweeks({})
   }, [])
 
-  // useEffect(() => {
-  //   fetchFixtures({
-  //     query: {
-  //       gameweekId: gameweekId || '69a2fdac4325f3340bf36c19',
-  //     },
-  //   })
-  // }, [gameweekId])
+  useEffect(() => {
+    if (!predictions) return
+
+    setPredictionInputs((prev) => {
+      const updated = { ...prev }
+
+      predictions.forEach((p) => {
+        if (!updated[p.fixture_id]) {
+          updated[p.fixture_id] = {
+            predicted_home_score: p.predicted_home_score,
+            predicted_away_score: p.predicted_away_score,
+          }
+        }
+      })
+
+      return updated
+    })
+  }, [predictions])
 
   useEffect(() => {
     fetchLeagueFixtures({
@@ -93,7 +83,9 @@ export function Dashboard() {
     })
   }, [gameweekId, selectedLeague])
 
-  console.log({ leagueFixtures })
+  useEffect(() => {
+    fetchPredictions({ query: { fantasy_league_id: selectedLeague?.leagueId } })
+  }, [selectedLeague])
 
   return (
     <>
@@ -102,20 +94,12 @@ export function Dashboard() {
         <TopNav links={topNav} />
         <div className='ms-auto flex items-center space-x-4'>
           <Search />
-          {/* <ThemeSwitch /> */}
-          {/* <ConfigDrawer /> */}
           <ProfileDropdown />
         </div>
       </Header>
 
       {/* ===== Main ===== */}
       <Main>
-        {/* <div className='mb-2 flex items-center justify-between space-y-2'>
-          <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
-          <div className='flex items-center space-x-2'>
-            <Button>Download</Button>
-          </div>
-        </div> */}
         <Tabs
           orientation='vertical'
           defaultValue='overview'
@@ -148,198 +132,25 @@ export function Dashboard() {
           <div className='col-span-1 grid gap-4 lg:col-span-4'>
             <div>
               {' '}
-              {gameweeks?.map((gameweek) => {
+              {/* {gameweeks?.map((gameweek) => {
                 return (
                   <span onClick={() => setGameweekId(gameweek?._id)}>
                     {gameweek?.round_name}
                   </span>
                 )
-              })}
+              })} */}
               {leagueFixtures?.map((matchObj) => {
                 return (
-                  <Card>
-                    <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                      <CardTitle className='text-sm font-medium'>
-                        djkdj
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className='flex'>
-                        <div className='col-span-1 flex flex-3 flex-col items-center text-center lg:col-span-3'>
-                          <div className='text-2xl font-bold'>
-                            {/* {matchObj?.teams?.home?.logo} */}
-                            <img
-                              src={`${
-                                Epl_Team_Flag[
-                                  `${matchObj?.match_id?.home_team_name}`
-                                ]?.image
-                              }`}
-                              width={40}
-                            />
-                          </div>
-                          <div className='font-semi-bold text-xs'>
-                            {matchObj?.match_id?.home_team_name}
-                          </div>
-                        </div>
-                        <div className='flex-6'>
-                          <Form {...form}>
-                            <form
-                              id='tasks-form'
-                              // onSubmit={form.handleSubmit(onSubmit)}
-                              // className='flex flex-row items-center justify-between space-y-0 pb-2'
-                              className='flex justify-between gap-4 space-y-6 overflow-y-auto px-4'
-                            >
-                              <FormField
-                                control={form.control}
-                                name='title'
-                                render={({ field }) => (
-                                  <FormItem>
-                                    {/* <FormLabel>Title</FormLabel> */}
-                                    <FormControl>
-                                      <Input
-                                        type='number'
-                                        {...field}
-                                        placeholder='?'
-                                        value={matchObj?.match_id?.home_score}
-                                      />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
-                              <div>-</div>
-                              <FormField
-                                control={form.control}
-                                name='title'
-                                render={({ field }) => (
-                                  <FormItem>
-                                    {/* <FormLabel>Title</FormLabel> */}
-                                    <FormControl>
-                                      <Input
-                                        type='number'
-                                        {...field}
-                                        placeholder='?'
-                                        value={matchObj?.match_id?.away_score}
-                                      />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
-                            </form>
-                          </Form>
-                        </div>
-                        <div className='col-span-1 flex flex-3 flex-col items-center text-center lg:col-span-3'>
-                          <div className='text-2xl font-bold'>
-                            <img
-                              src={`${
-                                Epl_Team_Flag[
-                                  `${matchObj?.match_id?.away_team_name}`
-                                ]?.image
-                              }`}
-                              width={40}
-                            />
-                          </div>
-
-                          <div className='font-semi-bold text-2xl text-xs'>
-                            {matchObj?.match_id?.away_team_name}
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <FixturePrediction
+                    key={matchObj.match_id._id}
+                    matchObj={matchObj}
+                    prediction={predictionInputs[matchObj.match_id._id]}
+                    setPredictionInputs={setPredictionInputs}
+                    selectedLeague={selectedLeague}
+                  />
                 )
               })}
             </div>
-            {/* <hr />
-            {EPLJson?.response
-              ?.filter(
-                (matchFilterObj) =>
-                  matchFilterObj?.league?.name === 'Premier League' &&
-                  matchFilterObj?.league?.country === 'England'
-              )
-              ?.map((matchObj) => {
-                return (
-                  <Card>
-                    <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                      <CardTitle className='text-sm font-medium'>
-                        {matchObj?.league?.name}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className='flex'>
-                        <div className='col-span-1 flex flex-3 flex-col items-center text-center lg:col-span-3'>
-                          <div className='text-2xl font-bold'>
-                            <img
-                              src={`${matchObj?.teams?.home?.logo}`}
-                              width={40}
-                            />
-                          </div>
-                          <div className='font-semi-bold text-xs'>
-                            {matchObj?.teams?.home?.name}
-                          </div>
-                        </div>
-                        <div className='flex-6'>
-                          <Form {...form}>
-                            <form
-                              id='tasks-form'
-                              // onSubmit={form.handleSubmit(onSubmit)}
-                              // className='flex flex-row items-center justify-between space-y-0 pb-2'
-                              className='flex justify-between gap-4 space-y-6 overflow-y-auto px-4'
-                            >
-                              <FormField
-                                control={form.control}
-                                name='title'
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormControl>
-                                      <Input
-                                        type='number'
-                                        {...field}
-                                        placeholder='?'
-                                      />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
-                              <div>-</div>
-                              <FormField
-                                control={form.control}
-                                name='title'
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormControl>
-                                      <Input
-                                        type='number'
-                                        {...field}
-                                        placeholder='?'
-                                      />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
-                            </form>
-                          </Form>
-                        </div>
-                        <div className='col-span-1 flex flex-3 flex-col items-center text-center lg:col-span-3'>
-                          <div className='text-2xl font-bold'>
-                            <img
-                              src={`${matchObj?.teams?.away?.logo}`}
-                              width={40}
-                            />
-                          </div>
-
-                          <div className='font-semi-bold text-2xl text-xs'>
-                            {matchObj?.teams?.away?.name}
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )
-              })} */}
           </div>
           <div className='col-span-1 grid content-start gap-4 lg:col-span-4'>
             <Card className='bg-gradient-to-r from-lime-600 to-green-400 text-white'>
@@ -396,24 +207,6 @@ export function Dashboard() {
                     handleClick={(leagueObj) => setSelectedLeague(leagueObj)}
                   />
                 </UsersProvider>
-
-                {/* <UsersProvider>
-                  <UsersTable
-                    data={leagues}
-                    search={search}
-                    navigate={navigate}
-                    columns={usersColumns}
-                  />
-                </UsersProvider> */}
-
-                {/* {user ? (
-                  <RecentSales />
-                ) : (
-                  <div>
-                    <div>Login to join the league</div>
-                    <div>Sign Up</div>
-                  </div>
-                )} */}
               </CardContent>
             </Card>
           </div>

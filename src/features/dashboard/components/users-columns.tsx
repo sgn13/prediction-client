@@ -60,7 +60,6 @@ export const usersColumns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const { firstName, lastName } = row.original
       const fullName = `${firstName} ${lastName}`
-      console.log({ row })
       return (
         <LongText className='max-w-100'>
           {row?.original?.leagueId?.name}

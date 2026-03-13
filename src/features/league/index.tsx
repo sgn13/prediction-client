@@ -51,14 +51,19 @@ export function League() {
 
   const [open, setOpen] = useState(null)
 
-  const [leagueId, setLeagueId] = useState('698ae219082176b99bd9e7ee')
+  const [leagueId, setLeagueId] = useState('69982ff79975d1cc64e07e6e')
 
   useEffect(() => {
     fetchLeagues({})
   }, [])
 
   useEffect(() => {
-    fetchLeagueUsers({ id: leagueId || '698ae219082176b99bd9e7ee' })
+    fetchLeagueUsers({
+      id: leagueId || '69982ff79975d1cc64e07e6e',
+      query: {
+        gameweek_id: '69ad30937e9ad400f018830e',
+      },
+    })
   }, [leagueId])
 
   return (
