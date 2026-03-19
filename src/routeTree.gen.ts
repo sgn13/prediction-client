@@ -32,6 +32,7 @@ import { Route as AuthenticatedLeagueIndexRouteImport } from './routes/_authenti
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
 import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
+import { Route as authVerifyIndexRouteImport } from './routes/(auth)/verify/index'
 import { Route as ClerkAuthenticatedUserManagementRouteImport } from './routes/clerk/_authenticated/user-management'
 import { Route as ClerkauthSignUpRouteImport } from './routes/clerk/(auth)/sign-up'
 import { Route as ClerkauthSignInRouteImport } from './routes/clerk/(auth)/sign-in'
@@ -41,6 +42,7 @@ import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_a
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
 import { Route as AuthenticatedLeagueLeagueIdRouteImport } from './routes/_authenticated/league/$leagueId'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
+import { Route as authVerifyTokenRouteImport } from './routes/(auth)/verify/$token'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
   id: '/clerk',
@@ -158,6 +160,11 @@ const AuthenticatedAppsIndexRoute = AuthenticatedAppsIndexRouteImport.update({
   path: '/apps/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const authVerifyIndexRoute = authVerifyIndexRouteImport.update({
+  id: '/(auth)/verify/',
+  path: '/verify/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ClerkAuthenticatedUserManagementRoute =
   ClerkAuthenticatedUserManagementRouteImport.update({
     id: '/user-management',
@@ -210,6 +217,11 @@ const AuthenticatedErrorsErrorRoute =
     path: '/errors/$error',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const authVerifyTokenRoute = authVerifyTokenRouteImport.update({
+  id: '/(auth)/verify/$token',
+  path: '/verify/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
@@ -225,6 +237,7 @@ export interface FileRoutesByFullPath {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/verify/$token': typeof authVerifyTokenRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/league/$leagueId': typeof AuthenticatedLeagueLeagueIdRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
@@ -234,6 +247,7 @@ export interface FileRoutesByFullPath {
   '/clerk/sign-in': typeof ClerkauthSignInRoute
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
+  '/verify/': typeof authVerifyIndexRoute
   '/apps/': typeof AuthenticatedAppsIndexRoute
   '/chats/': typeof AuthenticatedChatsIndexRoute
   '/help-center/': typeof AuthenticatedHelpCenterIndexRoute
@@ -255,6 +269,7 @@ export interface FileRoutesByTo {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
+  '/verify/$token': typeof authVerifyTokenRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/league/$leagueId': typeof AuthenticatedLeagueLeagueIdRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
@@ -264,6 +279,7 @@ export interface FileRoutesByTo {
   '/clerk/sign-in': typeof ClerkauthSignInRoute
   '/clerk/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/user-management': typeof ClerkAuthenticatedUserManagementRoute
+  '/verify': typeof authVerifyIndexRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
@@ -290,6 +306,7 @@ export interface FileRoutesById {
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/(auth)/verify/$token': typeof authVerifyTokenRoute
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/_authenticated/league/$leagueId': typeof AuthenticatedLeagueLeagueIdRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
@@ -299,6 +316,7 @@ export interface FileRoutesById {
   '/clerk/(auth)/sign-in': typeof ClerkauthSignInRoute
   '/clerk/(auth)/sign-up': typeof ClerkauthSignUpRoute
   '/clerk/_authenticated/user-management': typeof ClerkAuthenticatedUserManagementRoute
+  '/(auth)/verify/': typeof authVerifyIndexRoute
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
   '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
@@ -323,6 +341,7 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/verify/$token'
     | '/errors/$error'
     | '/league/$leagueId'
     | '/settings/account'
@@ -332,6 +351,7 @@ export interface FileRouteTypes {
     | '/clerk/sign-in'
     | '/clerk/sign-up'
     | '/clerk/user-management'
+    | '/verify/'
     | '/apps/'
     | '/chats/'
     | '/help-center/'
@@ -353,6 +373,7 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/'
+    | '/verify/$token'
     | '/errors/$error'
     | '/league/$leagueId'
     | '/settings/account'
@@ -362,6 +383,7 @@ export interface FileRouteTypes {
     | '/clerk/sign-in'
     | '/clerk/sign-up'
     | '/clerk/user-management'
+    | '/verify'
     | '/apps'
     | '/chats'
     | '/help-center'
@@ -387,6 +409,7 @@ export interface FileRouteTypes {
     | '/(errors)/500'
     | '/(errors)/503'
     | '/_authenticated/'
+    | '/(auth)/verify/$token'
     | '/_authenticated/errors/$error'
     | '/_authenticated/league/$leagueId'
     | '/_authenticated/settings/account'
@@ -396,6 +419,7 @@ export interface FileRouteTypes {
     | '/clerk/(auth)/sign-in'
     | '/clerk/(auth)/sign-up'
     | '/clerk/_authenticated/user-management'
+    | '/(auth)/verify/'
     | '/_authenticated/apps/'
     | '/_authenticated/chats/'
     | '/_authenticated/help-center/'
@@ -418,6 +442,8 @@ export interface RootRouteChildren {
   errors404Route: typeof errors404Route
   errors500Route: typeof errors500Route
   errors503Route: typeof errors503Route
+  authVerifyTokenRoute: typeof authVerifyTokenRoute
+  authVerifyIndexRoute: typeof authVerifyIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -583,6 +609,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/(auth)/verify/': {
+      id: '/(auth)/verify/'
+      path: '/verify'
+      fullPath: '/verify/'
+      preLoaderRoute: typeof authVerifyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/clerk/_authenticated/user-management': {
       id: '/clerk/_authenticated/user-management'
       path: '/user-management'
@@ -645,6 +678,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/errors/$error'
       preLoaderRoute: typeof AuthenticatedErrorsErrorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/(auth)/verify/$token': {
+      id: '/(auth)/verify/$token'
+      path: '/verify/$token'
+      fullPath: '/verify/$token'
+      preLoaderRoute: typeof authVerifyTokenRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -757,6 +797,8 @@ const rootRouteChildren: RootRouteChildren = {
   errors404Route: errors404Route,
   errors500Route: errors500Route,
   errors503Route: errors503Route,
+  authVerifyTokenRoute: authVerifyTokenRoute,
+  authVerifyIndexRoute: authVerifyIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

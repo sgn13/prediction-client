@@ -66,6 +66,8 @@ export function Dashboard() {
           updated[p.fixture_id] = {
             predicted_home_score: p.predicted_home_score,
             predicted_away_score: p.predicted_away_score,
+            prediction_type: p.prediction_type,
+            points_awarded: p.points_awarded,
           }
         }
       })
@@ -84,7 +86,12 @@ export function Dashboard() {
   }, [gameweekId, selectedLeague])
 
   useEffect(() => {
-    fetchPredictions({ query: { fantasy_league_id: selectedLeague?.leagueId } })
+    fetchPredictions({
+      query: {
+        fantasy_league_id:
+          selectedLeague?.leagueId || '69982ff79975d1cc64e07e6e',
+      },
+    })
   }, [selectedLeague])
 
   return (

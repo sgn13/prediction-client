@@ -40,16 +40,10 @@ export function ProfileDropdown() {
           <DropdownMenuSeparator /> */}
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
-              <Link to='/sign-up'>
-                Register
-                {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
-              </Link>
+              <Link to='/sign-up'>Register</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link to='/sign-in'>
-                Login
-                {/* <DropdownMenuShortcut>⌘B</DropdownMenuShortcut> */}
-              </Link>
+              <Link to='/sign-in'>Login</Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           {/* <DropdownMenuSeparator /> */}

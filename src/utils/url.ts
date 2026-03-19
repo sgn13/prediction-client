@@ -1,6 +1,7 @@
 export const url = {
   register: "/register/",
   verify: "/verify",
+  verifyOtp: "/otp",
   login: "/login/",
   profile: "/profile/",
   job: "/job/",

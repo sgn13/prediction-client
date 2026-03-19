@@ -28,7 +28,6 @@ export function AuthLayout({ children }: AuthLayoutProps) {
       </Header>
       <Main>
         <div className='grid grid-cols-1 gap-16 lg:grid-cols-7'>
-          <div className='col-span-1 grid gap-4 lg:col-span-4'>{children}</div>
           <div className='col-span-1 grid gap-4 lg:col-span-3'>
             {[1, 2, 3, 4]?.map(() => (
               <Card>
@@ -232,6 +231,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
               </Card>
             ))}
           </div>
+          <div className='col-span-1 grid gap-4 lg:col-span-4'>{children}</div>
         </div>
       </Main>
     </>

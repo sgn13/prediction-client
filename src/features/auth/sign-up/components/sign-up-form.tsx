@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigate } from '@tanstack/react-router'
+import { toast } from 'sonner'
 import { IconFacebook, IconGithub } from '@/assets/brand-icons'
 import useAppStore from '@/stores/app'
 import { cn } from '@/lib/utils'
@@ -43,34 +45,40 @@ const formSchema = z
     path: ['confirm_password'],
   })
 
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLFormElement> {
+  redirectTo?: string
+}
+
 export function SignUpForm({
   className,
+  redirectTo,
   ...props
-}: React.HTMLAttributes<HTMLFormElement>) {
-  const [isLoading, setIsLoading] = useState(false)
-  const { register } = useAppStore()
+}: UserAuthFormProps) {
+  const { register, isLoading } = useAppStore()
+  const navigate = useNavigate()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      full_name: '',
-      username: '',
-      email: '',
-      password: '',
-      confirm_password: '',
+      full_name: 'test',
+      username: 'test',
+      email: 'test@gmail.com',
+      password: 'crazymanager',
+      confirm_password: 'crazymanager',
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    setIsLoading(true)
-    // eslint-disable-next-line no-console
-    register({
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    const response = await register({
       values: data,
     })
-
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 3000)
+    if (response) {
+      navigate({
+        to: redirectTo || '/otp',
+        replace: true,
+      })
+      localStorage.setItem('verifyEmail', data.email)
+    }
   }
 
   return (
@@ -147,7 +155,7 @@ export function SignUpForm({
           )}
         />
         <Button className='mt-2' disabled={isLoading}>
-          Create Account
+          {isLoading ? 'Creating Account ...' : 'Create Account'}
         </Button>
 
         <div className='relative my-2'>

@@ -53,6 +53,9 @@ export const FixturePrediction = React.memo(
       })
     }
 
+    const fixtureDate =
+      new Date(matchObj?.match_id?.kickoff_at).getTime() - Date.now()
+
     return (
       <Card>
         <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
@@ -61,7 +64,13 @@ export const FixturePrediction = React.memo(
             <div>
               {format(matchObj?.match_id?.kickoff_at, 'EEEE, MMMM d HH:mm')}
             </div>
-            <Countdown kickoff={matchObj?.match_id?.kickoff_at} />
+            {matchObj?.match_id?.status === 'FINISHED' ? (
+              'FINISHED'
+            ) : (
+              <Countdown kickoff={matchObj?.match_id?.kickoff_at} />
+            )}
+            <div>{prediction?.prediction_type}</div>
+            <div>{prediction?.points_awarded}</div>
           </CardTitle>
         </CardHeader>
 
@@ -79,6 +88,9 @@ export const FixturePrediction = React.memo(
                 {matchObj?.match_id?.home_team_name}
               </div>
             </div>
+            {matchObj?.match_id?.status === 'FINISHED'
+              ? matchObj?.match_id?.home_score
+              : null}
 
             {/* Prediction Inputs */}
             <div className='flex flex-6 justify-center gap-4 px-4'>
@@ -93,6 +105,7 @@ export const FixturePrediction = React.memo(
                     e.target.value
                   )
                 }
+                disabled={fixtureDate < 0}
               />
 
               <div>-</div>
@@ -108,10 +121,14 @@ export const FixturePrediction = React.memo(
                     e.target.value
                   )
                 }
+                disabled={fixtureDate < 0}
               />
             </div>
 
             {/* Away Team */}
+            {matchObj?.match_id?.status === 'FINISHED'
+              ? matchObj?.match_id?.away_score
+              : null}
             <div className='flex flex-3 flex-col items-center text-center'>
               <img
                 src={
