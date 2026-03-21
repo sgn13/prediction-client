@@ -10,6 +10,7 @@ type Props = {
   matchObj: any
   prediction: any
   setPredictionInputs: React.Dispatch<React.SetStateAction<any>>
+  selectedLeague: any
 }
 
 export const FixturePrediction = React.memo(

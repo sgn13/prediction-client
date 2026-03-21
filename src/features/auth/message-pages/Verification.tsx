@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from '@tanstack/react-router'
-import { BadgeCheck } from 'lucide-react'
+import { BadgeCheck, XCircle } from 'lucide-react'
 import useAppStore from '@/stores/app'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'

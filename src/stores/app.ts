@@ -4,6 +4,13 @@ import { persist } from 'zustand/middleware'
 import { POST, GET } from '@/api/axiosConfig'
 import { url } from '@/utils/url'
 
+interface ApiResponse<T = any> {
+  msg: string
+  data?: T
+}
+interface Response {
+  msg: string
+}
 interface AuthParams {
   values: Record<string, any>
   enqueueSnackbar?: (
@@ -26,7 +33,7 @@ interface AppStore {
 
   login: (params: AuthParams) => Promise<any>
   register: (params: AuthParams) => Promise<any>
-  verify: (params: AuthParams) => Promise<any>
+  verify: any
   verifyOtp: (params: AuthParams) => Promise<any>
   logout: () => void
   setError: (errMessage: ErrorObject | null) => void
@@ -86,11 +93,11 @@ const useAppStore = create<AppStore>()(
         }
       },
 
-      register: async ({ values }) => {
+      register: async ({ values }: AuthParams): Promise<Response | undefined> => {
         try {
           set({ isLoading: true })
 
-          const response = await POST({
+          const response: Response = await POST({
             values,
             url: url?.register,
           })
@@ -134,7 +141,7 @@ const useAppStore = create<AppStore>()(
         try {
           set({ isLoading: true })
 
-          const response = await POST({
+          const response: Response = await POST({
             values,
             url: url?.verifyOtp,
           })

@@ -1,15 +1,6 @@
-import { type ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
-import { SlidersHorizontal, ArrowUpAZ, ArrowDownAZ } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
@@ -21,13 +12,13 @@ import { apps } from './data/apps'
 
 const route = getRouteApi('/_authenticated/apps/')
 
-type AppType = 'all' | 'connected' | 'notConnected'
+// type AppType = 'all' | 'connected' | 'notConnected'
 
-const appText = new Map<AppType, string>([
-  ['all', 'All Apps'],
-  ['connected', 'Connected'],
-  ['notConnected', 'Not Connected'],
-])
+// const appText = new Map<AppType, string>([
+//   ['all', 'All Apps'],
+//   ['connected', 'Connected'],
+//   ['notConnected', 'Not Connected'],
+// ])
 
 export function Apps() {
   const {
@@ -35,7 +26,7 @@ export function Apps() {
     type = 'all',
     sort: initSort = 'asc',
   } = route.useSearch()
-  const navigate = route.useNavigate()
+  // const navigate = route.useNavigate()
 
   const [sort, setSort] = useState(initSort)
   const [appType, setAppType] = useState(type)
@@ -56,30 +47,30 @@ export function Apps() {
     )
     .filter((app) => app.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value)
-    navigate({
-      search: (prev) => ({
-        ...prev,
-        filter: e.target.value || undefined,
-      }),
-    })
-  }
+  // const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setSearchTerm(e.target.value)
+  //   navigate({
+  //     search: (prev) => ({
+  //       ...prev,
+  //       filter: e.target.value || undefined,
+  //     }),
+  //   })
+  // }
 
-  const handleTypeChange = (value: AppType) => {
-    setAppType(value)
-    navigate({
-      search: (prev) => ({
-        ...prev,
-        type: value === 'all' ? undefined : value,
-      }),
-    })
-  }
+  // const handleTypeChange = (value: AppType) => {
+  //   setAppType(value)
+  //   navigate({
+  //     search: (prev) => ({
+  //       ...prev,
+  //       type: value === 'all' ? undefined : value,
+  //     }),
+  //   })
+  // }
 
-  const handleSortChange = (sort: 'asc' | 'desc') => {
-    setSort(sort)
-    navigate({ search: (prev) => ({ ...prev, sort }) })
-  }
+  // const handleSortChange = (sort: 'asc' | 'desc') => {
+  //   setSort(sort)
+  //   navigate({ search: (prev) => ({ ...prev, sort }) })
+  // }
 
   return (
     <>
@@ -105,13 +96,13 @@ export function Apps() {
         </div>
         <div className='my-4 flex items-end justify-between sm:my-0 sm:items-center'>
           <div className='flex flex-col gap-4 sm:my-4 sm:flex-row'>
-            <Input
+            {/* <Input
               placeholder='Filter apps...'
               className='h-9 w-40 lg:w-[250px]'
               value={searchTerm}
               onChange={handleSearch}
-            />
-            <Select value={appType} onValueChange={handleTypeChange}>
+            /> */}
+            {/* <Select value={appType} onValueChange={handleTypeChange}>
               <SelectTrigger className='w-36'>
                 <SelectValue>{appText.get(appType)}</SelectValue>
               </SelectTrigger>
@@ -120,10 +111,10 @@ export function Apps() {
                 <SelectItem value='connected'>Connected</SelectItem>
                 <SelectItem value='notConnected'>Not Connected</SelectItem>
               </SelectContent>
-            </Select>
+            </Select> */}
           </div>
 
-          <Select value={sort} onValueChange={handleSortChange}>
+          {/* <Select value={sort} onValueChange={handleSortChange}>
             <SelectTrigger className='w-16'>
               <SelectValue>
                 <SlidersHorizontal size={18} />
@@ -143,7 +134,7 @@ export function Apps() {
                 </div>
               </SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
         </div>
         <Separator className='shadow-sm' />
         <ul className='faded-bottom no-scrollbar grid gap-4 overflow-auto pt-4 pb-16 md:grid-cols-2 lg:grid-cols-3'>

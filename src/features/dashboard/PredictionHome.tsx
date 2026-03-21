@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react'
-import { z } from 'zod'
 import { getRouteApi } from '@tanstack/react-router'
-import { ArrowDownAZ, ArrowUpAz } from 'lucide-react'
-import useAppStore from '@/stores/app'
 import useGameweekStore from '@/stores/gameweekStore'
 import useLeagueStore from '@/stores/league'
 import useLeagueFixtureStore from '@/stores/leagueFixtureStore'
@@ -22,38 +19,25 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
-import { TopNav } from '@/components/layout/top-nav'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
 import { FixturePrediction } from './FixturePrediction'
 import { LeagueDashboard } from './components/leagueDashboard'
 import { UsersProvider } from './components/users-provider'
 
 const route = getRouteApi('/_authenticated/')
 
-const formSchema = z.object({
-  // fixture_id: z.string().min(1, 'Title is required.'),
-  // fantasy_league_id: z.string().min(1, 'Please select a status.'),
-  predicted_home_score: z.string().min(2, 'Please select a label.'),
-  predicted_away_score: z.string().min(2, 'Please choose a priority.'),
-})
-type TaskForm = z.infer<typeof formSchema>
-
 export function PredictionHome() {
-  const search = route.useSearch()
+  //   const search = route.useSearch()
   const navigate = route.useNavigate()
 
-  const { user } = useAppStore()
+  //   const { user } = useAppStore()
   const { fetchLeagues, leagues } = useLeagueStore()
   const { fetchGameweeks, gameweeks } = useGameweekStore()
   const { fetchLeagueFixtures, leagueFixtures } = useLeagueFixtureStore()
-  const { postPrediction, fetchPredictions, predictions } = usePredictionStore()
+  const { fetchPredictions, predictions } = usePredictionStore()
 
   const [selectedGameweek, setSelectedGameweek] = useState(null)
   const [selectedLeague, setSelectedLeague] = useState(null)
-  const [selectedFixture, setSelectedFixture] = useState(null)
 
   const [predictionInputs, setPredictionInputs] = useState({})
   console.log({ predictions })
