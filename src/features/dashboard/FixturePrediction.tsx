@@ -69,8 +69,12 @@ export const FixturePrediction = React.memo(
             ) : (
               <Countdown kickoff={matchObj?.match_id?.kickoff_at} />
             )}
-            <div>{prediction?.prediction_type}</div>
-            <div>{prediction?.points_awarded}</div>
+            <div>
+              {prediction?.prediction_type ? prediction?.prediction_type : null}
+            </div>
+            <div>
+              {prediction?.points_awarded ? prediction?.points_awarded : null}
+            </div>
           </CardTitle>
         </CardHeader>
 
