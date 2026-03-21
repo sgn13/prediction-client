@@ -28,7 +28,7 @@ export function LeagueDashboard({ handleClick }) {
       {leagues?.map((league) => {
         return (
           <div
-            className={`flex cursor-pointer items-center gap-4 rounded-sm p-2 ${leagueId === league?.leagueId ? 'bg-gradient-to-r from-lime-600 to-green-400 text-white' : ''}`}
+            className={`flex cursor-pointer items-center gap-4 rounded-sm p-2 ${selectedLeague?.leagueId === league?.leagueId ? 'bg-gradient-to-r from-lime-600 to-green-400 text-white' : ''}`}
             onClick={() => {
               setSelectedLeague(league)
               handleClick(league)
