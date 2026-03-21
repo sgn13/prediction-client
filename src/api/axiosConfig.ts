@@ -15,9 +15,9 @@ type ApiResponse<T> = T;
 //apply base url for axios
 // const API_URL = "http://localhost:8000/api/v1/";
 // const API_URL = "https://track-it-gilt-zeta.vercel.app/api/v1/"
-console.log("API URL:", import.meta.env.VITE_API_URL);
+console.log("API URL:", import.meta.env.API_URL);
 const axiosApi = axios.create({
-  baseURL: import.meta.env.VITE_API_URL||"http://127.0.0.1:8000/api/v1",
+  baseURL: import.meta.env.API_URL||"http://127.0.0.1:8000/api/v1",
   // baseURL: "https://track-it-gilt-zeta.vercel.app/api/v1/",
 });
 
