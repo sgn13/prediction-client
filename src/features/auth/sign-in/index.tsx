@@ -20,37 +20,43 @@ export function Login() {
           <CardTitle className='text-lg tracking-tight'>Login</CardTitle>
           <CardDescription>
             Enter your email and password below to <br />
-            log into your account.{' '}
-            <Link
-              to='/sign-up'
-              className='underline underline-offset-4 hover:text-primary'
-            >
-              Register
-              {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
-            </Link>
+            log into your account. <br />
+            <br />
           </CardDescription>
         </CardHeader>
         <CardContent>
           <UserAuthForm redirectTo={redirect} />
         </CardContent>
         <CardFooter>
-          <p className='px-8 text-center text-sm text-muted-foreground'>
-            By clicking sign in, you agree to our{' '}
-            <a
-              href='/terms'
-              className='underline underline-offset-4 hover:text-primary'
-            >
-              Terms of Service
-            </a>{' '}
-            and{' '}
-            <a
-              href='/privacy'
-              className='underline underline-offset-4 hover:text-primary'
-            >
-              Privacy Policy
-            </a>
-            .
-          </p>
+          <div>
+            <div className='mb-4 px-8 text-center text-sm text-muted-foreground'>
+              Don't have an account yet?
+              <Link
+                to='/sign-up'
+                className='text-primary underline underline-offset-4 hover:text-muted-foreground'
+              >
+                Register
+                {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
+              </Link>
+            </div>
+            <p className='px-8 text-center text-sm text-muted-foreground'>
+              By clicking sign in, you agree to our{' '}
+              <a
+                href='/terms'
+                className='underline underline-offset-4 hover:text-primary'
+              >
+                Terms of Service
+              </a>{' '}
+              and{' '}
+              <a
+                href='/privacy'
+                className='underline underline-offset-4 hover:text-primary'
+              >
+                Privacy Policy
+              </a>
+              .
+            </p>
+          </div>
         </CardFooter>
       </Card>
     </AuthLayout>

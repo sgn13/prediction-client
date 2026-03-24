@@ -22,36 +22,41 @@ export function SignUp() {
           </CardTitle>
           <CardDescription>
             Enter your email and password to create an account. <br />
-            Already have an account?{' '}
-            <Link
-              to='/sign-in'
-              className='underline underline-offset-4 hover:text-primary'
-            >
-              Sign In
-            </Link>
           </CardDescription>
         </CardHeader>
         <CardContent>
           <SignUpForm redirectTo={redirect} />
         </CardContent>
         <CardFooter>
-          <p className='px-8 text-center text-sm text-muted-foreground'>
-            By creating an account, you agree to our{' '}
-            <a
-              href='/terms'
-              className='underline underline-offset-4 hover:text-primary'
-            >
-              Terms of Service
-            </a>{' '}
-            and{' '}
-            <a
-              href='/privacy'
-              className='underline underline-offset-4 hover:text-primary'
-            >
-              Privacy Policy
-            </a>
-            .
-          </p>
+          <div>
+            <div className='mb-4 px-8 text-center text-sm text-muted-foreground'>
+              Already have an account yet?
+              <Link
+                to='/sign-in'
+                className='text-primary underline underline-offset-4 hover:text-muted-foreground'
+              >
+                Login
+                {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
+              </Link>
+            </div>
+            <p className='px-8 text-center text-sm text-muted-foreground'>
+              By clicking sign in, you agree to our{' '}
+              <a
+                href='/terms'
+                className='underline underline-offset-4 hover:text-primary'
+              >
+                Terms of Service
+              </a>{' '}
+              and{' '}
+              <a
+                href='/privacy'
+                className='underline underline-offset-4 hover:text-primary'
+              >
+                Privacy Policy
+              </a>
+              .
+            </p>
+          </div>
         </CardFooter>
       </Card>
     </AuthLayout>

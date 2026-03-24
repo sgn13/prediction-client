@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -7,8 +6,7 @@ import { Loader2, LogIn } from 'lucide-react'
 import { toast } from 'sonner'
 import { IconFacebook, IconGithub } from '@/assets/brand-icons'
 import useAppStore from '@/stores/app'
-import { useAuthStore } from '@/stores/auth-store'
-import { sleep, cn } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -40,24 +38,20 @@ export function UserAuthForm({
   redirectTo,
   ...props
 }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-  const { auth } = useAuthStore()
-  const { login, errMessage } = useAppStore()
+  const { login, isLoading } = useAppStore()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: 'manager1@gmail.coms',
-      password: 'crazymanager',
+      email: '',
+      password: '',
     },
   })
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    setIsLoading(true)
-
     try {
-      const response = await toast.promise(
+      await toast.promise(
         login({ values: data }), // 🔥 attach login here
         {
           loading: 'Signing in...',
@@ -75,31 +69,8 @@ export function UserAuthForm({
 
       // navigate({ to: redirectTo || '/', replace: true })
     } finally {
-      setIsLoading(false)
     }
   }
-
-  // async function onSubmit(data: z.infer<typeof formSchema>) {
-  //   setIsLoading(true)
-
-  //   const response = await login({
-  //     values: data,
-  //   })
-
-  //   toast.promise(sleep(2000), {
-  //     loading: 'Signing in...',
-  //     success: () => {
-  //       setIsLoading(false)
-  //       return `Welcome back, ${data.email}!`
-  //     },
-  //     error: 'Error',
-  //   })
-
-  //   if (response) {
-  //     const targetPath = redirectTo || '/'
-  //     navigate({ to: targetPath, replace: true })
-  //   }
-  // }
 
   return (
     <Form {...form}>
@@ -115,7 +86,7 @@ export function UserAuthForm({
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder='johndoe@gmail.com' {...field} />
+                <Input placeholder='name@example.com' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -145,7 +116,7 @@ export function UserAuthForm({
           Login
         </Button>
 
-        <div className='relative my-2'>
+        {/* <div className='relative my-2'>
           <div className='absolute inset-0 flex items-center'>
             <span className='w-full border-t' />
           </div>
@@ -154,16 +125,16 @@ export function UserAuthForm({
               Or continue with
             </span>
           </div>
-        </div>
+        </div> */}
 
-        <div className='grid grid-cols-2 gap-2'>
+        {/* <div className='grid grid-cols-2 gap-2'>
           <Button variant='outline' type='button' disabled={isLoading}>
             <IconGithub className='h-4 w-4' /> GitHub
           </Button>
           <Button variant='outline' type='button' disabled={isLoading}>
             <IconFacebook className='h-4 w-4' /> Facebook
           </Button>
-        </div>
+        </div> */}
       </form>
     </Form>
   )

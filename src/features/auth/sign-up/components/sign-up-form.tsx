@@ -1,9 +1,7 @@
-import { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
-import { toast } from 'sonner'
 import { IconFacebook, IconGithub } from '@/assets/brand-icons'
 import useAppStore from '@/stores/app'
 import { cn } from '@/lib/utils'
@@ -60,11 +58,11 @@ export function SignUpForm({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      full_name: 'test',
-      username: 'test',
-      email: 'test@gmail.com',
-      password: 'crazymanager',
-      confirm_password: 'crazymanager',
+      full_name: '',
+      username: '',
+      email: '',
+      password: '',
+      confirm_password: '',
     },
   })
 
@@ -95,7 +93,7 @@ export function SignUpForm({
             <FormItem>
               <FormLabel>Full Name</FormLabel>
               <FormControl>
-                <Input placeholder='eg. John Doe' {...field} />
+                <Input placeholder='Dannie Done' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -108,7 +106,7 @@ export function SignUpForm({
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder='eg. John' {...field} />
+                <Input placeholder='Dannie' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -158,7 +156,7 @@ export function SignUpForm({
           {isLoading ? 'Creating Account ...' : 'Create Account'}
         </Button>
 
-        <div className='relative my-2'>
+        {/* <div className='relative my-2'>
           <div className='absolute inset-0 flex items-center'>
             <span className='w-full border-t' />
           </div>
@@ -167,9 +165,9 @@ export function SignUpForm({
               Or continue with
             </span>
           </div>
-        </div>
+        </div> */}
 
-        <div className='grid grid-cols-2 gap-2'>
+        {/* <div className='grid grid-cols-2 gap-2'>
           <Button
             variant='outline'
             className='w-full'
@@ -186,7 +184,7 @@ export function SignUpForm({
           >
             <IconFacebook className='h-4 w-4' /> Facebook
           </Button>
-        </div>
+        </div> */}
       </form>
     </Form>
   )
