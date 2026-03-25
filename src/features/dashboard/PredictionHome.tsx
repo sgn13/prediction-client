@@ -69,6 +69,10 @@ export function PredictionHome() {
   }, [predictions])
 
   useEffect(() => {
+    setSelectedGameweek(gameweeks?.find((gameweek) => gameweek?.isActive))
+  }, [gameweeks])
+
+  useEffect(() => {
     fetchLeagueFixtures({
       query: {
         gameweekId: selectedGameweek?._id || '69a2fdac4325f3340bf36c19',

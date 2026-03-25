@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { Loader2, LogIn } from 'lucide-react'
 import { toast } from 'sonner'
-import { IconFacebook, IconGithub } from '@/assets/brand-icons'
 import useAppStore from '@/stores/app'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -54,7 +53,7 @@ export function UserAuthForm({
       await toast.promise(
         login({ values: data }), // 🔥 attach login here
         {
-          loading: 'Signing in...',
+          loading: 'Logging in...',
           success: (res) => {
             navigate({ to: redirectTo || '/', replace: true })
             return `Welcome back!`
@@ -62,12 +61,9 @@ export function UserAuthForm({
           error: (err) => ({
             message: err.response?.data?.msg || 'Login failed',
             variant: 'error',
-            // style: { background: '#dc2626', color: '#fff' },
           }),
         }
       )
-
-      // navigate({ to: redirectTo || '/', replace: true })
     } finally {
     }
   }
