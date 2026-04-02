@@ -39,7 +39,13 @@ export function RecentSales({ leagueId = '69982ff79975d1cc64e07e6e' }) {
             </div>
             <div className='flex-1'>
               {league?.role === 'ADMIN' ? (
-                <Settings size={14} className='cursor-pointer' />
+                <Settings
+                  size={14}
+                  className='cursor-pointer'
+                  onClick={() =>
+                    navigate({ to: `/league/settings/${league?.leagueId}/` })
+                  }
+                />
               ) : null}
             </div>
           </div>

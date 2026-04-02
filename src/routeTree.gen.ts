@@ -43,6 +43,7 @@ import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_auth
 import { Route as AuthenticatedLeagueLeagueIdRouteImport } from './routes/_authenticated/league/$leagueId'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
 import { Route as authVerifyTokenRouteImport } from './routes/(auth)/verify/$token'
+import { Route as AuthenticatedLeagueSettingsLeagueIdRouteImport } from './routes/_authenticated/league/settings/$leagueId'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
   id: '/clerk',
@@ -222,6 +223,12 @@ const authVerifyTokenRoute = authVerifyTokenRouteImport.update({
   path: '/verify/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedLeagueSettingsLeagueIdRoute =
+  AuthenticatedLeagueSettingsLeagueIdRouteImport.update({
+    id: '/league/settings/$leagueId',
+    path: '/league/settings/$leagueId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
@@ -255,6 +262,7 @@ export interface FileRoutesByFullPath {
   '/settings/': typeof AuthenticatedSettingsIndexRoute
   '/tasks/': typeof AuthenticatedTasksIndexRoute
   '/users/': typeof AuthenticatedUsersIndexRoute
+  '/league/settings/$leagueId': typeof AuthenticatedLeagueSettingsLeagueIdRoute
 }
 export interface FileRoutesByTo {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
@@ -287,6 +295,7 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
+  '/league/settings/$leagueId': typeof AuthenticatedLeagueSettingsLeagueIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -324,6 +333,7 @@ export interface FileRoutesById {
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
   '/_authenticated/tasks/': typeof AuthenticatedTasksIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
+  '/_authenticated/league/settings/$leagueId': typeof AuthenticatedLeagueSettingsLeagueIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -359,6 +369,7 @@ export interface FileRouteTypes {
     | '/settings/'
     | '/tasks/'
     | '/users/'
+    | '/league/settings/$leagueId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/clerk'
@@ -391,6 +402,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tasks'
     | '/users'
+    | '/league/settings/$leagueId'
   id:
     | '__root__'
     | '/_authenticated'
@@ -427,6 +439,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/'
     | '/_authenticated/tasks/'
     | '/_authenticated/users/'
+    | '/_authenticated/league/settings/$leagueId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -686,6 +699,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authVerifyTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/league/settings/$leagueId': {
+      id: '/_authenticated/league/settings/$leagueId'
+      path: '/league/settings/$leagueId'
+      fullPath: '/league/settings/$leagueId'
+      preLoaderRoute: typeof AuthenticatedLeagueSettingsLeagueIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -723,6 +743,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedLeagueIndexRoute: typeof AuthenticatedLeagueIndexRoute
   AuthenticatedTasksIndexRoute: typeof AuthenticatedTasksIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
+  AuthenticatedLeagueSettingsLeagueIdRoute: typeof AuthenticatedLeagueSettingsLeagueIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -736,6 +757,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedLeagueIndexRoute: AuthenticatedLeagueIndexRoute,
   AuthenticatedTasksIndexRoute: AuthenticatedTasksIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
+  AuthenticatedLeagueSettingsLeagueIdRoute:
+    AuthenticatedLeagueSettingsLeagueIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

@@ -145,6 +145,7 @@ export function PredictionHome() {
                   })}
                 </SelectContent>
               </Select>
+              <br />
               {leagueFixtures?.map((matchObj) => {
                 return (
                   <FixturePrediction

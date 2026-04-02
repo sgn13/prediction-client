@@ -22,7 +22,7 @@ export function LeagueLayout({ children }) {
       <Header>
         <TopNav links={[]} />
         <div className='ms-auto flex items-center space-x-4'>
-          <Search />
+          {/* <Search /> */}
           {/* <ThemeSwitch /> */}
           {/* <ConfigDrawer /> */}
           <ProfileDropdown />

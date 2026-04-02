@@ -49,7 +49,7 @@ function UserManagement() {
       <SignedIn>
         <UsersProvider>
           <Header fixed>
-            <Search />
+            {/* <Search /> */}
             <div className='ms-auto flex items-center space-x-4'>
               <ThemeSwitch />
               <UserButton />

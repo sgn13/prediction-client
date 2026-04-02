@@ -58,7 +58,7 @@ export const FixturePrediction = React.memo(
       new Date(matchObj?.match_id?.kickoff_at).getTime() - Date.now()
 
     return (
-      <Card>
+      <Card className='bg-gradient-to-r from-white to-sky-50'>
         <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
           <CardTitle className='text-sm font-medium'>
             <div>Premier League</div>

@@ -14,7 +14,7 @@ export function Tasks() {
   return (
     <TasksProvider>
       <Header fixed>
-        <Search />
+        {/* <Search /> */}
         <div className='ms-auto flex items-center space-x-4'>
           <ThemeSwitch />
           <ConfigDrawer />
