@@ -36,7 +36,6 @@ export function Login() {
                 className='text-primary underline underline-offset-4 hover:text-muted-foreground'
               >
                 Register
-                {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
               </Link>
             </div>
             <p className='px-8 text-center text-sm text-muted-foreground'>

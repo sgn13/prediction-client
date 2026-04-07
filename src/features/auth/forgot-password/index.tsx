@@ -33,7 +33,7 @@ export function ForgotPassword() {
               to='/sign-up'
               className='underline underline-offset-4 hover:text-primary'
             >
-              Sign up
+              Register
             </Link>
             .
           </p>

@@ -21,7 +21,6 @@ type TaskForm = z.infer<typeof formSchema>
 export function Dashboard() {
   const { user } = useAppStore()
 
-  console.log({ user })
   return (
     <>
       {/* ===== Top Heading ===== */}

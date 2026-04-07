@@ -31,7 +31,7 @@ export function LeagueLayout({ children }) {
       <Main>
         <Tabs
           orientation='vertical'
-          defaultValue='overview'
+          defaultValue='league'
           className='space-y-4'
         >
           <div className='w-full overflow-x-auto pb-2'>
@@ -45,7 +45,7 @@ export function LeagueLayout({ children }) {
                 Prediction
               </TabsTrigger>
               <TabsTrigger
-                value='analytics'
+                value='league'
                 onClick={() => {
                   navigate({ to: '/league' })
                 }}

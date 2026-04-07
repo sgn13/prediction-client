@@ -50,20 +50,17 @@ export function UserAuthForm({
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
-      await toast.promise(
-        login({ values: data }), // 🔥 attach login here
-        {
-          loading: 'Logging in...',
-          success: (res) => {
-            navigate({ to: redirectTo || '/', replace: true })
-            return `Welcome back!`
-          },
-          error: (err) => ({
-            message: err.response?.data?.msg || 'Login failed',
-            variant: 'error',
-          }),
-        }
-      )
+      await toast.promise(login({ values: data }), {
+        loading: 'Logging in...',
+        success: () => {
+          navigate({ to: redirectTo || '/', replace: true })
+          return `Welcome back!`
+        },
+        error: (err) => ({
+          message: err.response?.data?.msg || 'Login failed',
+          variant: 'error',
+        }),
+      })
     } finally {
     }
   }

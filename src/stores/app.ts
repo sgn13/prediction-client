@@ -35,6 +35,9 @@ interface AppStore {
   register: (params: AuthParams) => Promise<any>
   verify: any
   verifyOtp: (params: AuthParams) => Promise<any>
+  resendOtp: (params: AuthParams) => Promise<any>
+  forgotPassword: (params: AuthParams) => Promise<any>
+  resetPassword: (params: AuthParams) => Promise<any>
   logout: () => void
   setError: (errMessage: ErrorObject | null) => void
 }
@@ -144,6 +147,86 @@ const useAppStore = create<AppStore>()(
           const response: Response = await POST({
             values,
             url: url?.verifyOtp,
+          })
+
+            if (response) {
+              set({ isLoading: false })
+            toast.success(response.msg)
+          }
+
+          return response
+        } catch (error: any) {
+         const message =
+            error?.response?.data?.msg || error?.message || 'Verification  failed'
+          toast.error(message)
+
+          set({
+            errMessage: { message },
+            isLoading: false,
+          })
+        }
+      },
+       resendOtp: async ({ values }) => {
+        try {
+          set({ isLoading: true })
+
+          const response: Response = await POST({
+            values,
+            url: url?.resendOtp,
+          })
+
+            if (response) {
+              set({ isLoading: false })
+            toast.success(response.msg)
+          }
+
+          return response
+        } catch (error: any) {
+         const message =
+            error?.response?.data?.msg || error?.message || 'Verification  failed'
+          toast.error(message)
+
+          set({
+            errMessage: { message },
+            isLoading: false,
+          })
+        }
+      },
+
+       forgotPassword: async ({ values }) => {
+        try {
+          set({ isLoading: true })
+
+          const response: Response = await POST({
+            values,
+            url: url?.forgotPassword,
+          })
+
+            if (response) {
+              set({ isLoading: false })
+            toast.success(response.msg)
+          }
+
+          return response
+        } catch (error: any) {
+         const message =
+            error?.response?.data?.msg || error?.message || 'Verification  failed'
+          toast.error(message)
+
+          set({
+            errMessage: { message },
+            isLoading: false,
+          })
+        }
+      },
+
+       resetPassword: async ({ values,token }) => {
+        try {
+          set({ isLoading: true })
+
+          const response: Response = await POST({
+            values,
+            url: url?.resetPassword+`/${token}`,
           })
 
             if (response) {

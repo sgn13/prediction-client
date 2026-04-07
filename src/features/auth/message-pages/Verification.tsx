@@ -33,7 +33,6 @@ export function Verification() {
       <Card className='gap-4'>
         <div className='h-full'>
           <div className='m-auto flex h-full w-full flex-col items-center justify-center gap-3'>
-            {/* 🔄 Loading */}
             {status === 'loading' && (
               <>
                 <span className='text-lg font-semibold'>
@@ -42,7 +41,6 @@ export function Verification() {
               </>
             )}
 
-            {/* ✅ Success */}
             {status === 'success' && (
               <>
                 <h1 className='text-[6rem] text-green-500'>
@@ -67,7 +65,6 @@ export function Verification() {
               </>
             )}
 
-            {/* ❌ Error */}
             {status === 'error' && (
               <>
                 <h1 className='text-[6rem] text-red-500'>

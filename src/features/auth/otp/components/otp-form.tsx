@@ -1,10 +1,8 @@
-import { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import useAppStore from '@/stores/app'
-import { showSubmittedData } from '@/lib/show-submitted-data'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -18,8 +16,8 @@ import {
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSlot,
   InputOTPSeparator,
+  InputOTPSlot,
 } from '@/components/ui/input-otp'
 
 const formSchema = z.object({
@@ -40,7 +38,6 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
     defaultValues: { otp: '' },
   })
 
-  // eslint-disable-next-line react-hooks/incompatible-library
   const otp = form.watch('otp')
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
@@ -50,13 +47,6 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
     if (response) {
       navigate({ to: '/verify' })
     }
-    // setIsLoading(true)
-    // showSubmittedData(data)
-
-    // setTimeout(() => {
-    //   setIsLoading(false)
-    //   navigate({ to: '/' })
-    // }, 1000)
   }
 
   return (

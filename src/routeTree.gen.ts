@@ -43,6 +43,7 @@ import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_auth
 import { Route as AuthenticatedLeagueLeagueIdRouteImport } from './routes/_authenticated/league/$leagueId'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
 import { Route as authVerifyTokenRouteImport } from './routes/(auth)/verify/$token'
+import { Route as authResetPasswordTokenRouteImport } from './routes/(auth)/reset-password/$token'
 import { Route as AuthenticatedLeagueSettingsLeagueIdRouteImport } from './routes/_authenticated/league/settings/$leagueId'
 
 const ClerkRouteRoute = ClerkRouteRouteImport.update({
@@ -223,6 +224,11 @@ const authVerifyTokenRoute = authVerifyTokenRouteImport.update({
   path: '/verify/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authResetPasswordTokenRoute = authResetPasswordTokenRouteImport.update({
+  id: '/(auth)/reset-password/$token',
+  path: '/reset-password/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedLeagueSettingsLeagueIdRoute =
   AuthenticatedLeagueSettingsLeagueIdRouteImport.update({
     id: '/league/settings/$leagueId',
@@ -244,6 +250,7 @@ export interface FileRoutesByFullPath {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/reset-password/$token': typeof authResetPasswordTokenRoute
   '/verify/$token': typeof authVerifyTokenRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/league/$leagueId': typeof AuthenticatedLeagueLeagueIdRoute
@@ -277,6 +284,7 @@ export interface FileRoutesByTo {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
+  '/reset-password/$token': typeof authResetPasswordTokenRoute
   '/verify/$token': typeof authVerifyTokenRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/league/$leagueId': typeof AuthenticatedLeagueLeagueIdRoute
@@ -315,6 +323,7 @@ export interface FileRoutesById {
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/(auth)/reset-password/$token': typeof authResetPasswordTokenRoute
   '/(auth)/verify/$token': typeof authVerifyTokenRoute
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/_authenticated/league/$leagueId': typeof AuthenticatedLeagueLeagueIdRoute
@@ -351,6 +360,7 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/reset-password/$token'
     | '/verify/$token'
     | '/errors/$error'
     | '/league/$leagueId'
@@ -384,6 +394,7 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/'
+    | '/reset-password/$token'
     | '/verify/$token'
     | '/errors/$error'
     | '/league/$leagueId'
@@ -421,6 +432,7 @@ export interface FileRouteTypes {
     | '/(errors)/500'
     | '/(errors)/503'
     | '/_authenticated/'
+    | '/(auth)/reset-password/$token'
     | '/(auth)/verify/$token'
     | '/_authenticated/errors/$error'
     | '/_authenticated/league/$leagueId'
@@ -455,6 +467,7 @@ export interface RootRouteChildren {
   errors404Route: typeof errors404Route
   errors500Route: typeof errors500Route
   errors503Route: typeof errors503Route
+  authResetPasswordTokenRoute: typeof authResetPasswordTokenRoute
   authVerifyTokenRoute: typeof authVerifyTokenRoute
   authVerifyIndexRoute: typeof authVerifyIndexRoute
 }
@@ -699,6 +712,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authVerifyTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(auth)/reset-password/$token': {
+      id: '/(auth)/reset-password/$token'
+      path: '/reset-password/$token'
+      fullPath: '/reset-password/$token'
+      preLoaderRoute: typeof authResetPasswordTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/league/settings/$leagueId': {
       id: '/_authenticated/league/settings/$leagueId'
       path: '/league/settings/$leagueId'
@@ -820,6 +840,7 @@ const rootRouteChildren: RootRouteChildren = {
   errors404Route: errors404Route,
   errors500Route: errors500Route,
   errors503Route: errors503Route,
+  authResetPasswordTokenRoute: authResetPasswordTokenRoute,
   authVerifyTokenRoute: authVerifyTokenRoute,
   authVerifyIndexRoute: authVerifyIndexRoute,
 }

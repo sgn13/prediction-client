@@ -13,19 +13,17 @@ export function Header({ className, fixed, children, ...props }: HeaderProps) {
     const onScroll = () => {
       setOffset(document.body.scrollTop || document.documentElement.scrollTop)
     }
-
-    // Add scroll listener to the body
     document.addEventListener('scroll', onScroll, { passive: true })
 
-    // Clean up the event listener on unmount
     return () => document.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
     <header
       className={cn(
-        'z-50 container h-16',
-        fixed && 'header-fixed peer/header sticky top-0 w-[inherit]',
+        'z-50 h-16 w-full px-4',
+        'md:container md:mx-auto',
+        fixed && 'header-fixed peer/header sticky top-0',
         offset > 10 && fixed ? 'shadow' : 'shadow-none',
         className
       )}

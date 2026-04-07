@@ -8,24 +8,24 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { AuthLayout } from '../auth-layout'
-import { SignUpForm } from './components/sign-up-form'
+import { ResetPasswordForm } from './components/reset-password-form'
 
-export function SignUp() {
-  const { redirect } = useSearch({ from: '/(auth)/sign-up' })
+export function ResetPassword() {
+  const { redirect } = useSearch({ from: '/(auth)/reset-password/$token' })
 
   return (
     <AuthLayout>
       <Card className='gap-4'>
         <CardHeader>
           <CardTitle className='text-lg tracking-tight'>
-            Create an account
+            Reset password
           </CardTitle>
           <CardDescription>
-            Enter your email and password to create an account. <br />
+            Enter your email to reset your password. <br />
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <SignUpForm redirectTo={redirect} />
+          <ResetPasswordForm redirectTo={redirect} />
         </CardContent>
         <CardFooter>
           <div>

@@ -2,6 +2,7 @@ export const url = {
   register: "/register/",
   verify: "/verify",
   verifyOtp: "/otp",
+  resendOtp: "/resend-otp",
   login: "/login/",
   profile: "/profile/",
   job: "/job/",
@@ -16,5 +17,7 @@ export const url = {
   fixture: "/fixture",
   gameweek: "/gameweek",
   leagueFixture:'/leaguematches',
-  prediction:'/prediction'
+  prediction:'/prediction',
+  forgotPassword:'/forgot-password',
+  resetPassword:'/reset-password'
 };

@@ -110,7 +110,7 @@ export function PredictionHome() {
                 Prediction
               </TabsTrigger>
               <TabsTrigger
-                value='analytics'
+                value='league'
                 onClick={() => {
                   navigate({ to: '/league' })
                 }}

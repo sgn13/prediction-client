@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate, useParams } from '@tanstack/react-router'
 import useAppStore from '@/stores/app'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -13,24 +13,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/password-input'
 
 const formSchema = z
   .object({
-    email: z.email({
-      error: (iss) =>
-        iss.input === '' ? 'Please enter your email' : undefined,
-    }),
-    full_name: z.string({
-      error: (iss) =>
-        iss.input === '' ? 'Please enter your full name' : undefined,
-    }),
-    username: z.string({
-      error: (iss) =>
-        iss.input === '' ? 'Please enter your username' : undefined,
-    }),
-
     password: z
       .string()
       .min(1, 'Please enter your password')
@@ -46,35 +32,34 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLFormElement> {
   redirectTo?: string
 }
 
-export function SignUpForm({
+export function ResetPasswordForm({
   className,
   redirectTo,
   ...props
 }: UserAuthFormProps) {
-  const { register, isLoading } = useAppStore()
+  const { resetPassword, isLoading } = useAppStore()
   const navigate = useNavigate()
+
+  const { token } = useParams({ from: '/(auth)/reset-password/$token' })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      full_name: '',
-      username: '',
-      email: '',
       password: '',
       confirm_password: '',
     },
   })
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    const response = await register({
+    const response = await resetPassword({
       values: data,
+      token,
     })
     if (response) {
       navigate({
-        to: redirectTo || '/otp',
+        to: redirectTo || '/sign-in',
         replace: true,
       })
-      localStorage.setItem('verifyEmail', data.email)
     }
   }
 
@@ -87,50 +72,10 @@ export function SignUpForm({
       >
         <FormField
           control={form.control}
-          name='full_name'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Full Name</FormLabel>
-              <FormControl>
-                <Input placeholder='Dannie Done' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='username'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder='Dannie' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='email'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder='name@example.com' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
           name='password'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>New Password</FormLabel>
               <FormControl>
                 <PasswordInput placeholder='********' {...field} />
               </FormControl>
@@ -152,7 +97,7 @@ export function SignUpForm({
           )}
         />
         <Button className='mt-2' disabled={isLoading}>
-          {isLoading ? 'Creating Account ...' : 'Create Account'}
+          {isLoading ? 'Resetting Password ...' : 'Reset Password'}
         </Button>
       </form>
     </Form>

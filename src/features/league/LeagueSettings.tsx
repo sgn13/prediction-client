@@ -80,7 +80,7 @@ export function LeagueSettings() {
           <CardHeader>
             <CardTitle>League Settings</CardTitle>
             <CardDescription>
-              Code to join this league: {league?.inviteCode}
+              Code to join this league: <b>{league?.inviteCode}</b>
             </CardDescription>
           </CardHeader>
           <CardContent>
